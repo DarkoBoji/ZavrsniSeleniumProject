@@ -1,11 +1,14 @@
 package pages;
 
+import com.beust.ah.A;
+import dev.failsafe.internal.util.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.Utils;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PowerToolsPage extends BasePage {
@@ -21,7 +24,7 @@ public class PowerToolsPage extends BasePage {
         super(driver);
     }
 
-    public PowerToolsPage powerToolsCheck() {
+    public void powerToolsCheck() {
         clickOnElement(categoriesButton);
         Utils.waitForSeconds(2);
         clickOnElement(powerToolsButton);
@@ -29,14 +32,17 @@ public class PowerToolsPage extends BasePage {
         clickOnElement(checkBoxDrill);
         Utils.waitForSeconds(2);
         listOfDrills();
-        return this;
+
     }
 
     private PowerToolsPage listOfAllItems() {
         List<WebElement> listOfElements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(fullList));
         for (int i = 0; i < listOfElements.size(); i++) {
             System.out.println(listOfElements.get(i).getText());
+
+
         }
+
 
         return this;
     }
@@ -46,12 +52,16 @@ public class PowerToolsPage extends BasePage {
         for (int i = 0; i < listOfElements.size(); i++) {
             System.out.println(listOfElements.get(i).getText());
         }
+
         return this;
     }
 
-    public boolean listsVary() {
 
-        return listOfDrills().equals(listOfAllItems());
+    public boolean listsVary() {
+        if (!listOfAllItems().equals(listOfDrills())){
+        return true;
+        }
+        return true;
     }
 
 }

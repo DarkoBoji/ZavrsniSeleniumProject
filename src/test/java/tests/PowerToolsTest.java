@@ -31,6 +31,7 @@ public class PowerToolsTest extends BaseTest{
         Assert.assertTrue(powerToolsPage.listsVary());
 
 
+
     }
 
 }

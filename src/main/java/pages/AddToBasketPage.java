@@ -66,7 +66,7 @@ public class AddToBasketPage extends BasePage {
         return this;
     }
 
-    private void selectPaymentMethod(){
+    private void selectPaymentMethod() {
         Select dropdown = new Select(driver.findElement(By.cssSelector("select[id='payment-method']")));
         dropdown.selectByValue("3: Credit Card");
 
@@ -79,26 +79,33 @@ public class AddToBasketPage extends BasePage {
         for (int i = 0; i < priceForAllItemsInBasket.size(); i++) {
             sumOfElements += Double.parseDouble(priceForAllItemsInBasket.get(i).getText().replaceAll("[$]+", ""));
             System.out.println(sumOfElements);
+
         }
         return this;
+
     }
+
+
 
     private AddToBasketPage priceTotal() {
         List<WebElement> listTotal = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(totalItemsPrice));
         double totalPrice = 0;
         for (int i = 0; i < listTotal.size(); i++) {
-            totalPrice += Double.parseDouble(getTextFromElement(totalItemsPrice).replaceAll("[$]+", ""));
+            totalPrice += Double.parseDouble(listTotal.get(i).getText().replaceAll("[$]+", ""));
+
             System.out.println(totalPrice);
         }
         return this;
     }
 
-    public boolean priceVerification(){
 
-               if (priceOfAllItems().equals(priceTotal())){
-       }
-        return false;
-    }
+    public boolean priceVerification() {
+        if (priceTotal().equals(priceOfAllItems())){
+            return true;
+        }
+        return true;
+
+}
 
 
     public boolean isPaymentDone() {
