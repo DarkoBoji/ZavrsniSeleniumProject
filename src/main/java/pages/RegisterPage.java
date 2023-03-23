@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import utils.Utils;
 
@@ -69,9 +70,8 @@ public class RegisterPage extends BasePage{
         typeIn(emailField, username);
         typeIn(passwordField, password);
         clickOnElement(registerButton);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(homeButton));
         clickOnElement(homeButton);
-        Utils.waitForSeconds(2);
         return this;
     }
 
@@ -96,10 +96,11 @@ public class RegisterPage extends BasePage{
     }
 
     public RegisterPage loginUser(String username, String password){
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(emailFieldLogin));
         typeIn(emailFieldLogin, username);
         typeIn(passwordFieldLogin, password);
         clickOnElement(loginButton);
-        Utils.waitForSeconds(2);
+        Utils.waitForSeconds(1);
         clickOnElement(homeButton);
         return this;
     }

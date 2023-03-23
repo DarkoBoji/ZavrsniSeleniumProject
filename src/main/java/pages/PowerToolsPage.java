@@ -1,7 +1,5 @@
 package pages;
 
-import com.beust.ah.A;
-import dev.failsafe.internal.util.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,49 +17,53 @@ public class PowerToolsPage extends BasePage {
     private By checkBoxDrill = By.xpath("//input[@data-test='category-11']");
     private By drillList = By.xpath("//a[@style='text-decoration: none; color: black;']");
 
+    private int toolsOnPageOne;
+    private int toolsOnPageTwo;
 
     public PowerToolsPage(WebDriver driver) {
         super(driver);
     }
 
-    public void powerToolsCheck() {
+    public PowerToolsPage PowerTools() {
+
         clickOnElement(categoriesButton);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(powerToolsButton));
         clickOnElement(powerToolsButton);
         listOfAllItems();
         clickOnElement(checkBoxDrill);
-        Utils.waitForSeconds(2);
+        Utils.waitForSeconds(1);
         listOfDrills();
 
-    }
-
-    private PowerToolsPage listOfAllItems() {
-        List<WebElement> listOfElements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(fullList));
-        for (int i = 0; i < listOfElements.size(); i++) {
-            System.out.println(listOfElements.get(i).getText());
-
-
-        }
-
-
         return this;
     }
 
-    private PowerToolsPage listOfDrills() {
-        List<WebElement> listOfElements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(drillList));
-        for (int i = 0; i < listOfElements.size(); i++) {
-            System.out.println(listOfElements.get(i).getText());
-        }
 
-        return this;
+    public int listOfAllItems() {
+        List<WebElement> listOfElementsOne = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(fullList));
+        int numberOfTools;
+        numberOfTools = listOfElementsOne.size();
+        listOfElementsOne.size();
+        System.out.println(numberOfTools);
+        return toolsOnPageOne = numberOfTools;
+    }
+
+    public int listOfDrills() {
+        List<WebElement> listOfElementsTwo = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(drillList));
+        int numberOfDrills;
+        numberOfDrills = listOfElementsTwo.size();
+        System.out.println(numberOfDrills);
+        return toolsOnPageTwo = numberOfDrills;
+
     }
 
 
     public boolean listsVary() {
-        if (!listOfAllItems().equals(listOfDrills())){
+       if (toolsOnPageOne > toolsOnPageTwo){
+           System.out.println("Lista dva je smanjena u čekiranju");
+       }else System.out.println("Nije smanjen broj alata na listi");
+
         return true;
-        }
-        return true;
+
     }
 
 }

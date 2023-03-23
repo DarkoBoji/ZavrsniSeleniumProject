@@ -16,8 +16,6 @@ public class BasePage {
     protected WebDriverWait wait;
 
 
-
-
     private static final Logger log = LogManager.getLogger(BasePage.class.getName());
 
 
@@ -50,11 +48,6 @@ public class BasePage {
     }
 
 
-    protected String getColorFromElement(By locator, String cssValue) {
-        return getElement(locator).getCssValue(cssValue);
-    }
-
-
     protected boolean matchesExpectedText(By locator, String expectedText){
         WebElement element = getElement(locator);
         if (element.getText().equalsIgnoreCase(expectedText)){
@@ -65,19 +58,6 @@ public class BasePage {
         }
         return false;
     }
-
-    protected boolean islist(By locator){
-        List<WebElement> list = driver.findElements(locator);
-        if (!list.isEmpty() && (list.get(0)!=null)){
-            return list.get(0).isDisplayed();
-        }
-        //WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        return false;
-    }
-
-
-
-
 
 
 }

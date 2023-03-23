@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.Utils;
 
 public class WishListPage extends BasePage{
@@ -18,11 +19,11 @@ public class WishListPage extends BasePage{
 
     public WishListPage addToWishList(){
         clickOnElement(thorHammer);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(addToFavorites));
         clickOnElement(addToFavorites);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(userMenuButton));
         clickOnElement(userMenuButton);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(myFavorites));
         clickOnElement(myFavorites);
 
         return this;

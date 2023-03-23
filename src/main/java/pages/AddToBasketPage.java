@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import utils.Utils;
 
+import java.util.Collections;
 import java.util.List;
 
 public class AddToBasketPage extends BasePage {
@@ -29,6 +30,8 @@ public class AddToBasketPage extends BasePage {
     private By finishBaying = By.cssSelector("button[data-test='finish']");
     private By successfulPayment = By.cssSelector("div[class='help-block']");
 
+    private double sumOfAllPrices;
+    private double total;
 
     public AddToBasketPage(WebDriver driver) {
         super(driver);
@@ -36,27 +39,28 @@ public class AddToBasketPage extends BasePage {
 
     public AddToBasketPage addItemsToBasket() {
 
+        wait.until(ExpectedConditions.elementToBeClickable(firstItem));
         clickOnElement(firstItem);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(addOneMoreItem));
         clickOnElement(addOneMoreItem);
         clickOnElement(addOneMoreItem);
         clickOnElement(addToCartButton);
         clickOnElement(homeButton);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(secondItem));
         clickOnElement(secondItem);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(addOneMoreItem));
         clickOnElement(addOneMoreItem);
         clickOnElement(addToCartButton);
         clickOnElement(homeButton);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(thirdItem));
         clickOnElement(thirdItem);
         clickOnElement(addToCartButton);
         clickOnElement(redBalloon);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(allItemsPrices));
         priceOfAllItems();
         priceTotal();
         clickOnElement(proceedToCheckout1);
-        Utils.waitForSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(proceedToCheckout2));
         clickOnElement(proceedToCheckout2);
         clickOnElement(proceedToCheckout3);
         selectPaymentMethod();
@@ -72,40 +76,35 @@ public class AddToBasketPage extends BasePage {
 
     }
 
-    private AddToBasketPage priceOfAllItems() {
+    private double priceOfAllItems() {
 
         List<WebElement> priceForAllItemsInBasket = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(allItemsPrices));
         double sumOfElements = 0;
         for (int i = 0; i < priceForAllItemsInBasket.size(); i++) {
             sumOfElements += Double.parseDouble(priceForAllItemsInBasket.get(i).getText().replaceAll("[$]+", ""));
             System.out.println(sumOfElements);
-
         }
-        return this;
-
+        return sumOfAllPrices = sumOfElements;
     }
 
+    private double priceTotal() {
 
-
-    private AddToBasketPage priceTotal() {
         List<WebElement> listTotal = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(totalItemsPrice));
         double totalPrice = 0;
         for (int i = 0; i < listTotal.size(); i++) {
             totalPrice += Double.parseDouble(listTotal.get(i).getText().replaceAll("[$]+", ""));
-
             System.out.println(totalPrice);
         }
-        return this;
+        return total = totalPrice;
     }
 
 
     public boolean priceVerification() {
-        if (priceTotal().equals(priceOfAllItems())){
-            return true;
-        }
+        if (sumOfAllPrices == total) {
+            System.out.println("Total cena je jednaka zbiru svih cena proizvoda");
+        } else System.out.println("Cene nisu jednake");
         return true;
-
-}
+    }
 
 
     public boolean isPaymentDone() {

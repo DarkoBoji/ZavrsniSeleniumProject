@@ -27,8 +27,9 @@ public class PowerToolsTest extends BaseTest{
                 .registerUser()
                 .goToLoginForm()
                 .loginUser(registerPage.getUsername(), registerPage.getPassword());
-        powerToolsPage.powerToolsCheck();
+        powerToolsPage.PowerTools();
         Assert.assertTrue(powerToolsPage.listsVary());
+
 
 
 
